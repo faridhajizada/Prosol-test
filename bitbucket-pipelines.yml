@@ -1,0 +1,74 @@
+pipelines:
+  branches:
+    development:
+    - stage:
+        name: Deploy to Development
+        deployment: development
+        steps:
+        - step:
+            name: Build front-end app and deploy
+            runs-on:
+            - 'self.hosted'
+            - 'linux.shell'
+            - 'development'
+            script:
+            - npm install
+            - npx vite build --mode Development
+            - scp -r dist/* $DEV_SERVER_USER@$DEV_SERVER_IP:/var/www/dev.internal.prolab.az/html
+
+    staging:
+    - stage:
+        name: Deploy to Staging
+        deployment: staging
+        steps:
+        - step:
+            name: Build front-end app and deploy
+            runs-on:
+            - 'self.hosted'
+            - 'linux.shell'
+            - 'staging'
+            script:
+            - npm install
+            - npx vite build --mode Staging
+            - scp -r dist/* $STAGING_SERVER_USER@$STAGING_SERVER_IP:/var/www/staging.internal.prolab.az/html
+
+    master:
+    - stage:
+        name: Build front-dashboard
+        steps:
+        - step:
+            name: Build front-dashboard
+            image: node:22.2.0
+            caches:
+              - node
+            script:
+              - npm install
+              - npx vite build --mode Production
+            artifacts:
+              - dist/**
+
+    - stage:
+        name: Deploy to pre-production
+        deployment: preproduction
+        trigger: manual
+        steps:
+        - step:
+            name: Deploy to pre-production
+            image: node:22.2.0
+            script:
+              - npm install
+              - npm install -g wrangler
+              - npx wrangler pages deploy dist --branch=preprod --project-name=prolab-dashboard
+
+    - stage:
+        name: Deploy to production
+        deployment: production
+        trigger: manual
+        steps:
+        - step:
+            name: Deploy to production
+            image: node:22.2.0
+            script:
+              - npm install
+              - npm install -g wrangler
+              - npx wrangler pages deploy dist --project-name=prolab-dashboard

@@ -1,0 +1,10 @@
+/*@tailwind base;*/
+/*@tailwind components;*/
+//@tailwind base;
+@tailwind utilities;
+
+.ant-card-body {
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
