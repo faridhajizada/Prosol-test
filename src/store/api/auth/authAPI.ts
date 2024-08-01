@@ -70,6 +70,20 @@ export const authAPI = createApi({
                     response: iGetById<iAuthAPISwitchAccountResponse>,
                 ): iAuthAPISwitchAccountResponse => {},
             }),
+			
+			/*
+			// authSwitchAccount body structure
+			{
+			  "roleName": "string",
+			  "organization": {
+				"organizationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+				"organizationUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+				"organizationLogoUrl": "string",
+				"name": "string"
+			  }
+			}
+			
+			*/
         };
     },
 });
