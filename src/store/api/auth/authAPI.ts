@@ -76,8 +76,8 @@ export const authAPI = createApi({
 			{
 			  "roleName": "string",
 			  "organization": {
-				"organizationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-				"organizationUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+				"organizationId": "string",
+				"organizationUserId": "string",
 				"organizationLogoUrl": "string",
 				"name": "string"
 			  }
