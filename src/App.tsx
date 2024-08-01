@@ -6,7 +6,7 @@ function App() {
 
     return (
         <Config theme={theme}>
-            <Layout theme={theme} />
+            <Layout theme={theme}/>
         </Config>
     );
 }
